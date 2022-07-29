@@ -1,0 +1,20 @@
+[package]
+name = "mdbook-gitlab-link"
+version = "0.1.0"
+edition = "2021"
+authors = ["Zhongqiu Zhao <belltoy@gmail.com>"]
+description = "A mdbook preprocessor that tries to renderer GitLab-specific references as links"
+license = "MIT"
+homepage = "https://github.com/belltoy/mdbook-gitlab-link"
+repository = "https://github.com/belltoy/mdbook-gitlab-link"
+
+[dependencies]
+mdbook = { version = "0.4.21", default-features = false }
+env_logger = "0.9.0"
+log = "0.4.11"
+clap = "3.1.18"
+serde_json = "1.0.57"
+semver = "1.0.12"
+pulldown-cmark = { version = "0.9.2", default-features = false }
+regex = "1.6.0"
+toml = "0.5.9"
