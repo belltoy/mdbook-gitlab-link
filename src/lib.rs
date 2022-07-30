@@ -35,7 +35,12 @@ impl GitlabLink {
         let re = Regex::new(r"(?x)
             (?:                                     # issue or mr group
                 (?:
-                    (?:(?P<ns>[a-zA-Z0-9-_\.]+)/)?  # optional namespace
+                    (?P<ns>
+                        (?:
+                            (?:[a-zA-Z0-9-_\.]+)
+                            (?:/(?P<subgroup>[a-zA-Z-_\.]+))?
+                        )
+                    /)?  # optional namespaces
                     (?P<project>[a-zA-Z0-9-_\.]+)   # project
                 )?                                  # optional namespace/project
                 (?:
@@ -46,7 +51,7 @@ impl GitlabLink {
             \b)
             |
             (?:
-                (?P<project_ref>[a-zA-Z0-9-_\.]+/[a-zA-Z0-9-_\.]+)>   # project ref, group/project>
+                (?P<project_ref>[a-zA-Z0-9-_\.]+(/[a-zA-Z0-9-_\.]+)?/[a-zA-Z0-9-_\.]+)>   # project ref, group/project>
             )
             ").unwrap();
         Self {
