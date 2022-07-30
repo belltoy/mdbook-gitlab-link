@@ -60,21 +60,27 @@ impl GitlabLink {
     }
 
     fn get_server_url<'a>(&self, cfg: Cfg<'a>) -> &'a str {
-        cfg.and_then(|m| {
-            m.get("gitlab-server-url").and_then(|s| s.as_str())
-        }).unwrap_or_else(|| option_env!("CI_SERVER_URL").unwrap_or(""))
+        option_env!("CI_SERVER_URL").or_else(|| {
+            cfg.and_then(|m| {
+                m.get("gitlab-server-url").and_then(|s| s.as_str())
+            })
+        }).unwrap_or("")
     }
 
     fn get_current_project<'a>(&self, cfg: Cfg<'a>) -> &'a str {
-        cfg.and_then(|m| {
-            m.get("gitlab-project-name").and_then(|s| s.as_str())
-        }).unwrap_or_else(|| option_env!("CI_PROJECT_NAME").unwrap_or(""))
+        option_env!("CI_PROJECT_NAME").or_else(|| {
+            cfg.and_then(|m| {
+                m.get("gitlab-project-name").and_then(|s| s.as_str())
+            })
+        }).unwrap_or("")
     }
 
     fn get_current_namespace<'a>(&self, cfg: Cfg<'a>) -> &'a str {
-        cfg.and_then(|m| {
-            m.get("gitlab-project-namespace").and_then(|s| s.as_str())
-        }).unwrap_or_else(|| option_env!("CI_PROJECT_NAMESPACE").unwrap_or(""))
+        option_env!("CI_PROJECT_NAMESPACE").or_else(|| {
+            cfg.and_then(|m| {
+                m.get("gitlab-project-namespace").and_then(|s| s.as_str())
+            })
+        }).unwrap_or("")
     }
 
     fn resolve_ref<'a>(&self, ref_link: RefType<'a>, cfg: Cfg<'_>) -> String {
